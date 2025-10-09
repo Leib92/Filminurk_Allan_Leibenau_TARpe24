@@ -1,4 +1,5 @@
 ﻿using Filminurk.Data;
+using Filminurk.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers
@@ -12,6 +13,14 @@ namespace Filminurk.Controllers
         }
         public IActionResult Index()
         {
+            var result = _context.Movies.Select(x => new MoviesIndexViewModel
+            {
+                ID = x.ID,
+                Title = x.Title,
+                FirstPublished = x.FirstPublished,
+                CurrentRating = x.CurrentRating,
+                Genre = x.Genre
+            });
             return View();
         }
     }
