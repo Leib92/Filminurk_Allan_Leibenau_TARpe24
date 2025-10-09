@@ -23,5 +23,8 @@ namespace Filminurk.Core.Domain
         public int? Budget { get; set; }
         public int? BoxOffice { get; set; }
 
+        /* andmebaasi jaoks vajalikud */
+        public DateTime? EntryCreatedAt { get; set; }
+        public DateTime? EntryModifiedAt { get; set; }
     }
 }
