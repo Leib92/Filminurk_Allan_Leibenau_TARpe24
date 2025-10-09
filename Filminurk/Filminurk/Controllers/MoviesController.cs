@@ -1,5 +1,5 @@
 ﻿using Filminurk.Data;
-using Filminurk.Models.Models;
+using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers

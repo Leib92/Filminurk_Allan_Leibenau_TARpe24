@@ -10,6 +10,7 @@ namespace Filminurk.Data
 {
     public class FilminurkTARpe24Context : DbContext
     {
+        public FilminurkTARpe24Context(DbContextOptions<FilminurkTARpe24Context> options) : base(options) { }
         public DbSet<Movie> Movies { get; set; }
     }
 }
