@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Filminurk.Data.Migrations
 {
     [DbContext(typeof(FilminurkTARpe24Context))]
-    [Migration("20251009090340_init1")]
-    partial class init1
+    [Migration("20251010084412_Init2")]
+    partial class Init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,12 @@ namespace Filminurk.Data.Migrations
                     b.Property<string>("Director")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EntryCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EntryModifiedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateOnly>("FirstPublished")
                         .HasColumnType("date");

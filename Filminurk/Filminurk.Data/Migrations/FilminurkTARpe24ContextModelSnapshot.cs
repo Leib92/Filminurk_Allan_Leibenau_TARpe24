@@ -48,6 +48,12 @@ namespace Filminurk.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("EntryCreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EntryModifiedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateOnly>("FirstPublished")
                         .HasColumnType("date");
 

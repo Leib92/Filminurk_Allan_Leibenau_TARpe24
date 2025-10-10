@@ -1,4 +1,6 @@
-﻿using Filminurk.Data;
+﻿using System.Reflection;
+using Filminurk.Core.Dto;
+using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +23,7 @@ namespace Filminurk.Controllers
                 CurrentRating = x.CurrentRating,
                 Genre = x.Genre
             });
-            return View();
+            return View(result);
         }
 
         [HttpGet]
@@ -29,6 +31,34 @@ namespace Filminurk.Controllers
         {
             MoviesCreateViewModel result = new();
             return View("Create", result);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(MoviesCreateViewModel vm)
+        {
+            var dto = new MoviesDTO()
+            {
+                ID = vm.ID,
+                Title = vm.Title,
+                Description = vm.Description,
+                FirstPublished = vm.FirstPublished,
+                Director = vm.Director,
+                Actors = vm.Actors,
+                CurrentRating = vm.CurrentRating,
+                Genre = vm.Genre,
+                Budget = vm.Budget,
+                BoxOffice = vm.BoxOffice,
+                EntryCreatedAt = vm.EntryCreatedAt,
+                EntryModifiedAt = vm.EntryModifiedAt
+
+            };
+            var result = await _context.Create(dto);
+            if (result == null) 
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

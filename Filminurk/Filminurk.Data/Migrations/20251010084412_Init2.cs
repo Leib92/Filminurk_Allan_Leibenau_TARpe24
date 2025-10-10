@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Filminurk.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init1 : Migration
+    public partial class Init2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,9 @@ namespace Filminurk.Data.Migrations
                     CurrentRating = table.Column<double>(type: "float", nullable: true),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Budget = table.Column<int>(type: "int", nullable: true),
-                    BoxOffice = table.Column<int>(type: "int", nullable: true)
+                    BoxOffice = table.Column<int>(type: "int", nullable: true),
+                    EntryCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EntryModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
