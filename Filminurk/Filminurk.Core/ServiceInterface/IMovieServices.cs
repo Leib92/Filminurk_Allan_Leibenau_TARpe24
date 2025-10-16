@@ -11,6 +11,7 @@ namespace Filminurk.Core.ServiceInterface
     public interface IMovieServices // see on interface. asub .core/serviceinterface
     {
         Task<Movie> Create (MoviesDTO dto);
+        Task<Movie> Delete(Guid id);
         Task<Movie> DetailsAsync(Guid id);
     }
 }

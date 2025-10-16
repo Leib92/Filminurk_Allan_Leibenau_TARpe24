@@ -67,4 +67,10 @@
 			@Html.DisplayFor(model => model.BoxOffice)
 		</div>
 	</dl>
+	<hr />
+	<form asp-action="DeleteConfirmation">
+		<input type="hidden" asp-for="ID" />
+		<input type="submit" value="Remove" class="btn btn-danger" />
+		<a asp-action="Index" asp-controller="Movies" class="btn btn-success">Return to list</a>
+	</form>
 </div>

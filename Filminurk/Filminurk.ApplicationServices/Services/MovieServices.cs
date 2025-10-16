@@ -47,5 +47,15 @@ namespace Filminurk.ApplicationServices.Services
             var result = await _context.Movies.FirstOrDefaultAsync(x => x.ID == id);
             return result;
         }
+
+        public async Task<Movie> Delete(Guid id)
+        {
+            var result = await _context.Movies.FirstOrDefaultAsync(x => x.ID == id);
+
+            _context.Movies.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
+        }
     }
 }
