@@ -36,32 +36,30 @@ namespace Filminurk.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            MoviesCreateViewModel result = new();
-            return View("Create", result);
+            MoviesCreateUpdateViewModel result = new();
+            return View("CreateUpdate", result);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MoviesCreateViewModel vm)
+        public async Task<IActionResult> Create(MoviesCreateUpdateViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var dto = new MoviesDTO()
-                {
-                    ID = vm.ID,
-                    Title = vm.Title,
-                    Description = vm.Description,
-                    FirstPublished = vm.FirstPublished,
-                    Director = vm.Director,
-                    Actors = vm.Actors,
-                    CurrentRating = vm.CurrentRating,
-                    Genre = vm.Genre,
-                    Budget = vm.Budget,
-                    BoxOffice = vm.BoxOffice,
-                    EntryCreatedAt = vm.EntryCreatedAt,
-                    EntryModifiedAt = vm.EntryModifiedAt
+                var dto = new MoviesDTO();
+                dto.ID = vm.ID;
+                dto.Title = vm.Title;
+                dto.Description = vm.Description;
+                dto.FirstPublished = vm.FirstPublished;
+                // dto.Director = vm.Director;
+                dto.Actors = vm.Actors;
+                dto.CurrentRating = vm.CurrentRating;
+                dto.Genre = vm.Genre;
+                dto.Budget = vm.Budget;
+                dto.BoxOffice = vm.BoxOffice;
+                dto.EntryCreatedAt = vm.EntryCreatedAt;
+                dto.EntryModifiedAt = vm.EntryModifiedAt;
 
-                };
                 var result = await _movieServices.Create(dto);
                 if (result == null)
                 {
@@ -69,7 +67,36 @@ namespace Filminurk.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return NotFound();
+            else
+            {
+                return NotFound();
+            };
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var movie = await _movieServices.DetailsAsync(id);
+
+            if (movie == null) 
+            {
+                return NotFound();
+            }
+
+            var vm = new MoviesCreateUpdateViewModel();
+            vm.ID = movie.ID;
+            vm.Title = movie.Title;
+            vm.Description = movie.Description;
+            vm.FirstPublished = movie.FirstPublished;
+            vm.Director = movie.Director;
+            vm.Actors = movie.Actors;
+            vm.CurrentRating = movie.CurrentRating;
+            vm.Genre = movie.Genre;
+            vm.Budget = movie.Budget;
+            vm.BoxOffice = movie.BoxOffice;
+            vm.EntryCreatedAt = movie.EntryCreatedAt;
+            vm.EntryModifiedAt = movie.EntryModifiedAt;
+
+            return View("CreateUpdate",vm);
         }
 
         [HttpGet]
@@ -82,7 +109,7 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
             var vm = new MoviesDeleteViewModel();
-            vm.ID = id;
+            vm.ID = movie.ID;
             vm.Title = movie.Title;
             vm.Description = movie.Description;
             vm.FirstPublished = movie.FirstPublished;

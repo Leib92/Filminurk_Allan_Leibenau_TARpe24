@@ -1,8 +1,8 @@
 ﻿namespace Filminurk.Models.Movies
 {
-    public class MoviesCreateViewModel
+    public class MoviesCreateUpdateViewModel
     {
-        public Guid ID { get; set; }
+        public Guid? ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateOnly FirstPublished { get; set; }

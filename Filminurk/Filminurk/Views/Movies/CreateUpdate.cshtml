@@ -1,7 +1,16 @@
 ﻿@using Filminurk.Models.Movies
-@model Filminurk.Models.Movies.MoviesCreateViewModel
+@using Filminurk.Core.Domain
+@model Filminurk.Models.Movies.MoviesCreateUpdateViewModel
 
-<h1>Lisa File</h1>
+@if (Model.ID.HasValue)
+{
+	<h1>Muuda film</h1>
+}
+else
+{
+	<h1>Lisa File</h1>
+}
+
 <div>
 	<form method="post" enctype="multipart/form-data">
 		<input asp-for="ID" type="hidden"/>
