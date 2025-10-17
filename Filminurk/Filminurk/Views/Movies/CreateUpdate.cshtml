@@ -74,7 +74,15 @@ else
 				<input asp-for="BoxOffice" class="form-control" />
 			</div>
 		</div>
-		
-		<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create"/>
+
+		@if (Model.ID.HasValue)
+		{
+			<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
+		}
+		else
+		{
+			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />
+		}
+		<a asp-action="Index" asp-controller="Movies" class="btn btn-success" value="Back" />
 	</form>
 </div>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Filminurk.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class FixThis : Migration
+    public partial class HelpMe : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
