@@ -10,6 +10,9 @@ namespace Filminurk.Models.Movies
         public double? CurrentRating { get; set; }
         // public List<UserComment>? Reviews { get; set; }
 
+        /* Kaasaolevate piltide andmeomaduse */
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
+
         /* 2 enda valitud */
 
         public string? Genre { get; set; }
