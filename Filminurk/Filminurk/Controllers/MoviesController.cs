@@ -74,7 +74,7 @@ namespace Filminurk.Controllers
                         FilePath = x.FilePath,
                         MovieID = x.MovieID,
                         IsPoster = x.IsPoster,
-                    })
+                    }).ToArray()
 
                 };
 
@@ -83,6 +83,11 @@ namespace Filminurk.Controllers
                 {
                     return NotFound();
                 }
+                if (!ModelState.IsValid)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -96,6 +101,8 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
+            // var ImageViewModel = await _movieServices.DetailsAsync(id);
+
             var vm = new MoviesDetailsViewModel();
 
             vm.ID = movie.ID;
@@ -110,6 +117,7 @@ namespace Filminurk.Controllers
             vm.BoxOffice = movie.BoxOffice;
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
+            vm.Images.AddRange(images);
 
             return View(vm);
         }
@@ -230,6 +238,20 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<ImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    IsPoster = y.IsPoster,
+                    FilePath = y.ExistingFilePath,
+                }).ToArrayAsync();
+
         }
     }
 }

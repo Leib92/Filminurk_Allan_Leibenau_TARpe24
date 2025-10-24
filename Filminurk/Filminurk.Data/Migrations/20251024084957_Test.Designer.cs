@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Filminurk.Data.Migrations
 {
     [DbContext(typeof(FilminurkTARpe24Context))]
-    [Migration("20251017082223_HelpMe")]
-    partial class HelpMe
+    [Migration("20251024084957_Test")]
+    partial class Test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace Filminurk.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Filminurk.Core.Domain.FileToApi", b =>
+                {
+                    b.Property<Guid>("ImageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ExistingFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsPoster")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("MovieID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ImageID");
+
+                    b.ToTable("FilesToApi");
+                });
 
             modelBuilder.Entity("Filminurk.Core.Domain.Movie", b =>
                 {

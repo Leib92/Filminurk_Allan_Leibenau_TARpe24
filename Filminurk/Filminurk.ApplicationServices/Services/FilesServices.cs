@@ -12,12 +12,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace Filminurk.ApplicationServices.Services
 {
-    public class FileServices : IFilesServices
+    public class FilesServices : IFilesServices
     {
         private readonly IHostEnvironment _webHost;
         private readonly FilminurkTARpe24Context _context;
 
-        public FileServices(IHostEnvironment webHost, FilminurkTARpe24Context context)
+        public FilesServices(IHostEnvironment webHost, FilminurkTARpe24Context context)
         {
             _webHost = webHost;
             _context = context;
@@ -48,7 +48,7 @@ namespace Filminurk.ApplicationServices.Services
                             MovieID = domain.ID,
                         };
 
-                        _context.FilesToApi.AddAsync(path);
+                        _context.FilesToApi.Add(path);
                     }
                 }
             }
