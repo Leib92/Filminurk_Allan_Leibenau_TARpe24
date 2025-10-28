@@ -1,102 +1,103 @@
-﻿@using Filminurk.Models.Movies
-@using Filminurk.Core.Domain
+﻿@using Filminurk.Core.Domain
+@using Filminurk.Models.Movies
+
 @model Filminurk.Models.Movies.MoviesCreateUpdateViewModel
 
 @if (Model.ID.HasValue)
 {
-	<h1>Muuda film</h1>
+    <h1>Muuda Film</h1>
 }
 else
 {
-	<h1>Lisa File</h1>
+    <h1>Lisa Film</h1>
 }
 
+
 <div>
-	<form method="post" enctype="multipart/form-data">
-		<input asp-for="ID" type="hidden"/>
-		<input asp-for="EntryCreatedAt" type="hidden" />
-		<input asp-for="EntryModifiedAt" type="hidden" />
+    <form method="post" enctype="multipart/form-data">
+        <input asp-for="ID" type="hidden" />
+        <input asp-for="EntryCreatedAt" type="hidden" />
+        <input asp-for="EntryModifiedAt" type="hidden" />
 
-		<div class="form-group row">
-			<label asp-for="Title" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="Title" class="form-control" />
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Title" class="form-control" />
+            </div>
+        </div>
 
-		<div class="form-group row">
-			<label asp-for="Description" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="Description" class="form-control" />
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="Description" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Description" class="form-control" />
+            </div>
+        </div>
 
-		<div class="form-group row">
-			<label asp-for="FirstPublished" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="FirstPublished" class="form-control" />
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="FirstPublished" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="FirstPublished" class="form-control" />
+            </div>
+        </div>
 
-		<div class="form-group row">
-			<label asp-for="Director" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="Director" class="form-control" />
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="Director" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Director" class="form-control" />
+            </div>
+        </div>
 
-		<div class="form-group row">
-			<label asp-for="CurrentRating" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="CurrentRating" class="form-control" />
-			</div>
-		</div>
+        <div class="form-group row">
+            <label asp-for="CurrentRating" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="CurrentRating" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Genre" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Genre" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Budget" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="Budget" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="BoxOffice" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="BoxOffice" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Files" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input class="form-control" asp-for="Files" multiple type="file" />
+            </div>
+        </div>
+
+        @foreach (var images in Model.Images)
+        {
+            <partial name="_Images" model="images" />
+            <input asp-action="removeImage" asp-controller="Movies" asp-route-ImageID="@images.ImageID" type="submit" class="btn btn-success" value="Eemalda see pilt" />
+        }
 
 
-		<!-- end andmed -->
-		<div class="form-group row">
-			<label asp-for="Genre" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="Genre" class="form-control" />
-			</div>
-		</div>
+        @if (Model.ID.HasValue)
+        {
+            <input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
+        }
+        else
+        {
+            <input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />
+        }
+        <a asp-action="Index" asp-controller="Movies" class="btn btn-success">Back</a>
 
-		<div class="form-group row">
-			<label asp-for="Budget" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="Budget" class="form-control" />
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label asp-for="BoxOffice" class="col-sm-2 col-label"></label>
-			<div class="col-sm-10">
-				<input asp-for="BoxOffice" class="form-control" />
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label asp-for-="Files" class="col-sm-2 col-form-label"></label>
-			<div class="col-sm-10">
-				<input class="form-control" asp-for="Files" multiple type="file" />
-			</div>
-		</div>
-
-		@foreach(var images in Model.Images)
-		{
-			<partial name="_Images" model="images" />
-			<input asp-action="removeImage" asp-controller="Movies" asp-route-ImageID="@images.ImageID" 
-			type="submit" class="btn btn-success" value="Eemalda see pilt"/>
-		}
-
-		@if (Model.ID.HasValue)
-		{
-			<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
-		}
-		else
-		{
-			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />
-		}
-		<a asp-action="Index" asp-controller="Movies" class="btn btn-success" value="Back" />
-	</form>
+    </form>
 </div>

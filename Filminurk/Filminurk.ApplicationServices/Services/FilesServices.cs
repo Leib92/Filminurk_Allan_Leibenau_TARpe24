@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Filminurk.Core.Domain;
+﻿using Filminurk.Core.Domain;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Filminurk.ApplicationServices.Services
 {
@@ -27,7 +27,7 @@ namespace Filminurk.ApplicationServices.Services
         {
             if (dto.Files != null && dto.Files.Count > 0)
             {
-                if (Directory.Exists(_webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"))
+                if (!Directory.Exists(_webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"))
                 {
                     Directory.CreateDirectory(_webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\");
                 }
@@ -41,7 +41,7 @@ namespace Filminurk.ApplicationServices.Services
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(fileStream);
-                        FileToApi path = new FileToApi()
+                        FileToApi path = new FileToApi
                         {
                             ImageID = Guid.NewGuid(),
                             ExistingFilePath = uniqueFileName,
@@ -50,9 +50,10 @@ namespace Filminurk.ApplicationServices.Services
 
                         _context.FilesToApi.Add(path);
                     }
-                }
-            }
 
+                }
+
+            }
         }
 
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDTO dto)
@@ -65,6 +66,7 @@ namespace Filminurk.ApplicationServices.Services
             {
                 File.Delete(filePath);
             }
+
             _context.FilesToApi.Remove(imageID);
             await _context.SaveChangesAsync();
 
@@ -79,7 +81,5 @@ namespace Filminurk.ApplicationServices.Services
             }
             return null;
         }
-
-
     }
 }
