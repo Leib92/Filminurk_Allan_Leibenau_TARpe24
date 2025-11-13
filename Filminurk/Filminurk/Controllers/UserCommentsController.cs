@@ -39,13 +39,12 @@ namespace Filminurk.Controllers
         }
 
         [HttpPost, ActionName("NewComment")]
-        //
         public async Task<IActionResult> NewCommentPost(UserCommentsCreateViewModel newcomment)
         {
-            var dto = new UserCommentDTO(){};
-            dto.CommentID = (Guid)newcomment.CommentID;
+            var dto = new UserCommentDTO(){}; // null
+            dto.CommentID = (Guid)newcomment.CommentID; // all 0's
             dto.CommentBody = newcomment.CommentBody;
-            dto.CommenterUserID = newcomment.CommenterUserID;
+            dto.CommenterUserID = newcomment.CommenterUserID; // null
             dto.CommentedScore = newcomment.CommentedScore;
             dto.CommentCreatedAt = newcomment.CommentCreatedAt;
             dto.CommentModifiedAt = newcomment.CommentModifiedAt;
@@ -53,7 +52,7 @@ namespace Filminurk.Controllers
             dto.IsHarmful = 0;
 
             var result = await _userCommentsService.NewComment(dto);
-            if (result == null) 
+            if (result == null) //false
             {
                 return NotFound();
             }
@@ -80,5 +79,31 @@ namespace Filminurk.Controllers
 
             return View(commentVM);
         }
+        [HttpGet]
+        public async Task<IActionResult> DeleteAdmin(Guid id)
+        {
+            var deleteEntry = await _userCommentsService.Delete(id);
+            if (deleteEntry == null)
+            {
+                return NotFound();
+            }
+            var commentVM = new UserCommentsIndexViewModel();
+            commentVM.CommentID = deleteEntry.CommentID;
+            commentVM.CommentBody = deleteEntry.CommentBody;
+            commentVM.CommenterUserID = deleteEntry.CommenterUserID;
+            commentVM.CommentedScore = deleteEntry.CommentedScore;
+            commentVM.CommentCreatedAt= deleteEntry.CommentCreatedAt;
+            commentVM.CommentModifiedAt = deleteEntry.CommentModifiedAt;
+            commentVM.CommentDeletedAt= deleteEntry.CommentDeletedAt;
+            return View(commentVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteAdminPost(Guid id)
+        {
+            var deleteThisComment = await _userCommentsService.Delete(id);
+            if (deleteThisComment == null) { return NotFound(); }
+            return RedirectToAction("Index");
+        }
+        
     }
 }
