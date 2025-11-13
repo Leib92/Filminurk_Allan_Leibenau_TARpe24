@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Filminurk.Core.Dto
+namespace Filminurk.Models.UserComments
 {
-    public class UserCommentDTO
+    public class UserCommentsCreateViewModel
     {
         [Key]
-        public Guid? CommentID { get; set; }
-        public string? CommenterUserID { get; set; }
+        public Guid CommentID { get; set; }
+        public string? CommenterUserID { get; set; } = "00000000-0000-0000-000000000001"; // GUID: 8-4-4-12
         public string CommentBody { get; set; }
         public int CommentedScore { get; set; }
         public int? IsHelpful { get; set; } // thumbs up
@@ -21,5 +16,6 @@ namespace Filminurk.Core.Dto
         public DateTime? CommentCreatedAt { get; set; }
         public DateTime? CommentModifiedAt { get; set; }
         public DateTime? CommentDeletedAt { get; set; }
+
     }
 }

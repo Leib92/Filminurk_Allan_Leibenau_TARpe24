@@ -110,7 +110,7 @@ namespace Filminurk.Controllers
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
             vm.Director = movie.Director;
-            vm.Actors = movie.Actors;
+            // vm.Actors = movie.Actors;
             vm.Images.AddRange(images);
 
             return View(vm);
@@ -148,7 +148,7 @@ namespace Filminurk.Controllers
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
             vm.Director = movie.Director;
-            vm.Actors = movie.Actors;
+            // vm.Actors = movie.Actors;
             vm.Images.AddRange(images);
 
             return View("CreateUpdate", vm);
@@ -219,7 +219,7 @@ namespace Filminurk.Controllers
             vm.EntryCreatedAt = movie.EntryCreatedAt;
             vm.EntryModifiedAt = movie.EntryModifiedAt;
             vm.Director = movie.Director;
-            vm.Actors = movie.Actors;
+            // vm.Actors = movie.Actors;
             vm.Images.AddRange(images);
 
             return View(vm);
