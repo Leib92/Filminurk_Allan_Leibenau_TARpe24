@@ -11,6 +11,7 @@ builder.Services.AddDbContext<FilminurkTARpe24Context>(options => options.UseSql
 builder.Services.AddScoped<IMovieServices, MovieServices>();
 builder.Services.AddScoped<IFilesServices, FilesServices>();
 builder.Services.AddScoped<IUserCommentsService, UserCommentsServices>();
+builder.Services.AddScoped<IFavouriteListsServices, FavouriteListsServices>();
 
 var app = builder.Build();
 
