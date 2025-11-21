@@ -2,7 +2,7 @@
 @* check for editing or creating *@
 @{
 	var allMoviesTickboxes = ViewData["allmovies"] as List<Filminurk.Models.Movies.MoviesIndexViewModel>;
-	List<string> userHasSelected = ViewData["userHasSelected"];
+	List<string> userHasSelected = ViewBag.userHasSelected;
 	List<string> previouslySelected = userHasSelected;
 }
 
@@ -42,12 +42,12 @@
 		}
 		else
 		{
-			@foreach (var movie in ViewBag.allmovies)
+			foreach (var movie in allMoviesTickboxes)
 			{
 				<tr>
 					<td>@movie.Title</td>
 					<td>@movie.FirstPublished</td>
-					<td>@movie.MovieGenre</td>
+					<td>@movie.Genre</td>
 					<td>
 						@if (movie.ID.HasValue)
 						{
@@ -64,12 +64,14 @@
 						}
 						else
 						{
-							<input 
+							<tr>
+								<input 
 								type="checkbox"
-								name="userHasSelected" 
-								value="@movie.ID" 
-								id="checkbox-@movie.ID"
-							/>
+								name="userHasSelected"
+								value="@movie.ID"
+								id="checkbox-@movie.ID" 
+								/>
+							</tr>
 						}
 					</td>
 				</tr>

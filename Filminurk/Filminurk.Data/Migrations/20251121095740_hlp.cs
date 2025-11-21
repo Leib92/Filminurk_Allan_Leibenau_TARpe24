@@ -6,11 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Filminurk.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Sure : Migration
+    public partial class hlp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "FavouritesLists",
+                columns: table => new
+                {
+                    FavouriteListID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ListBelongsToUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsMovieOrActor = table.Column<bool>(type: "bit", nullable: false),
+                    ListName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ListDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
+                    ListCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ListModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ListDeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsReported = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavouritesLists", x => x.FavouriteListID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "FilesToApi",
                 columns: table => new
@@ -23,6 +43,21 @@ namespace Filminurk.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FilesToApi", x => x.ImageID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileToDatabase",
+                columns: table => new
+                {
+                    ImageID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ListID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileToDatabase", x => x.ImageID);
                 });
 
             migrationBuilder.CreateTable(
@@ -39,11 +74,17 @@ namespace Filminurk.Data.Migrations
                     Budget = table.Column<int>(type: "int", nullable: true),
                     BoxOffice = table.Column<int>(type: "int", nullable: true),
                     EntryCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EntryModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    EntryModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    FavouritesListFavouriteListID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Movies_FavouritesLists_FavouritesListFavouriteListID",
+                        column: x => x.FavouritesListFavouriteListID,
+                        principalTable: "FavouritesLists",
+                        principalColumn: "FavouriteListID");
                 });
 
             migrationBuilder.CreateTable(
@@ -79,8 +120,8 @@ namespace Filminurk.Data.Migrations
                     CommenterUserID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CommentBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentedScore = table.Column<int>(type: "int", nullable: false),
-                    IsHelpful = table.Column<int>(type: "int", nullable: false),
-                    IsHarmful = table.Column<int>(type: "int", nullable: false),
+                    IsHelpful = table.Column<int>(type: "int", nullable: true),
+                    IsHarmful = table.Column<int>(type: "int", nullable: true),
                     CommentCreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CommentModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CommentDeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -102,6 +143,11 @@ namespace Filminurk.Data.Migrations
                 column: "MovieID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Movies_FavouritesListFavouriteListID",
+                table: "Movies",
+                column: "FavouritesListFavouriteListID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserComments_MovieID",
                 table: "UserComments",
                 column: "MovieID");
@@ -117,10 +163,16 @@ namespace Filminurk.Data.Migrations
                 name: "FilesToApi");
 
             migrationBuilder.DropTable(
+                name: "FileToDatabase");
+
+            migrationBuilder.DropTable(
                 name: "UserComments");
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "FavouritesLists");
         }
     }
 }
