@@ -50,7 +50,8 @@
 						<table>
 							<tr>
 								<td colspan="2">
-									<a asp-action="ListDetailsListOwner" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID">@list.ListName</a>
+									<a asp-action="UserDetails" asp-controller="FavouritesLists" 
+									asp-route-thisuserid="@list.ListBelongsToUser">@list.ListName</a>
 								</td>
 							</tr>
 							<tr>
